@@ -41,7 +41,7 @@ class _SignInViewState extends State<SignInView> {
                     text = text?.trim().toLowerCase() ?? '';
 
                     if (text.isEmpty) {
-                      return 'Invalid username';
+                      return 'Invalid credentials';
                     }
                     return null;
                   },
@@ -50,20 +50,21 @@ class _SignInViewState extends State<SignInView> {
                   height: 20,
                 ),
                 TextFormField(
+                  obscureText: true,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   onChanged: (text) {
                     setState(() {
-                      _password = text.replaceAll(' ', '').toLowerCase();
+                      _password = text.replaceAll(' ', '');
                     });
                   },
                   decoration: const InputDecoration(
                     hintText: 'password',
                   ),
                   validator: (text) {
-                    text = text?.replaceAll(' ', '').toLowerCase() ?? '';
+                    text = text?.replaceAll(' ', '') ?? '';
 
                     if (text.length < 4) {
-                      return 'Invalid password';
+                      return 'Invalid credentials';
                     }
                     return null;
                   },
@@ -120,6 +121,7 @@ class _SignInViewState extends State<SignInView> {
           SignInFailure.notFound: 'Not Found',
           SignInFailure.unauthorized: 'Invalid password',
           SignInFailure.unknown: 'Error',
+          SignInFailure.network: 'Network error'
         }[failure];
 
         ScaffoldMessenger.of(context).showSnackBar(
